@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/views">
+        <file alias="MasterView.qml">views/MasterView.qml</file>
+        <file alias="SplashView.qml">views/SplashView.qml</file>
+        <file alias="DashboardView.qml">views/DashboardView.qml</file>
+        <file alias="CreateConnectionView.qml">views/CreateConnectionView.qml</file>
+        <file alias="EditConnectionView.qml">views/EditConnectionView.qml</file>
+    </qresource>
+</RCC>

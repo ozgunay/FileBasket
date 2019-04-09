@@ -1,2 +1,2 @@
 # FileBasket
-File transfer via sftp client written in Qt
+File transfer program written in QT5. Uses OpenSSH library.

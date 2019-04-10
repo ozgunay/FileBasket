@@ -1,10 +1,12 @@
 import QtQuick 2.9
 
-Rectangle {
-    anchors.fill: parent
-    color: "#f4c842"
-    Text {
-        anchors.centerIn: parent
-        text: "Create Connection View"
+Item {
+    Rectangle {
+        anchors.fill: parent
+        color: "#f4c842"
+        Text {
+            anchors.centerIn: parent
+            text: "Create Connection View"
+        }
     }
 }

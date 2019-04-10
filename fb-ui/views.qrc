@@ -5,5 +5,6 @@
         <file alias="DashboardView.qml">views/DashboardView.qml</file>
         <file alias="CreateConnectionView.qml">views/CreateConnectionView.qml</file>
         <file alias="EditConnectionView.qml">views/EditConnectionView.qml</file>
+        <file alias="FindConnectionView.qml">views/FindConnectionView.qml</file>
     </qresource>
 </RCC>

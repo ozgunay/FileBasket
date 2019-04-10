@@ -6,7 +6,7 @@ Item {
         color: "#f4c842"
         Text {
             anchors.centerIn: parent
-            text: "Edit Connection View"
+            text: "Find Connection View"
         }
     }
 }

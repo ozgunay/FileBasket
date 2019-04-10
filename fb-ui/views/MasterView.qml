@@ -9,18 +9,23 @@ Window {
     title: qsTr("Connection Mangement")
     Connections {
         target: masterController.ui_navigationController
-        onGoCreateClientView:
-            contentFrame.replace("qrc:/views/CreateClientView.qml")
+        onGoCreateConnectionView:
+            contentFrame.replace("qrc:/views/CreateConnectionView.qml")
         onGoDashboardView: contentFrame.replace("qrc:/views/DashboardView.qml")
-        onGoEditClientView:
-            contentFrame.replace("qrc:/views/EditClientView.qml", {selectedClient:
-            client})
-        onGoFindClientView:
-            contentFrame.replace("qrc:/views/FindClientView.qml")
+        onGoFindConnectionView: contentFrame.replace("qrc:/views/FindConnectionView.qml")
+        onGoEditConnectionView:
+            contentFrame.replace("qrc:/views/EditConnectionView.qml", {selectedConnection:
+            Connection})
     }
     StackView {
         id: contentFrame
-        anchors.fill: parent
+        clip: true
+        anchors {
+            top: parent.top
+            bottom: parent.bottom
+            right: parent.right
+            left: navigationBar.right
+        }
         initialItem: Qt.resolvedUrl("qrc:/views/SplashView.qml")
     }
     Rectangle {
@@ -30,8 +35,25 @@ Window {
             bottom: parent.bottom
             left: parent.left
         }
-        width: 100
+        width: 120
         color: "#000000"
+        Column {
+            Button {
+                text: "Dashboard"
+                onClicked:
+                    masterController.ui_navigationController.goDashboardView()
+            }
+            Button {
+                text: "New Connection"
+                onClicked:
+                    masterController.ui_navigationController.goCreateConnectionView()
+            }
+            Button {
+                text: "Find Connection"
+                onClicked:
+                    masterController.ui_navigationController.goFindConnectionView()
+            }
+        }
     }
     Component.onCompleted: contentFrame.replace("qrc:/views/DashboardView.qml");
 }

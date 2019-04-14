@@ -35,12 +35,16 @@ DEFINES += QT_DEPRECATED_WARNINGS
 INCLUDEPATH += source
 
 SOURCES += source/models/Connection.cpp \
-    source/controllers/master-controller.cpp
+    source/controllers/master-controller.cpp \
+    source/framework/command.cpp \
+    source/controllers/command-controller.cpp
 
 HEADERS += source/fb-lib_global.h  \
-        source/models/Connection.h \
+    source/models/Connection.h \
     source/controllers/master-controller.h \
-    source/controllers/navigation-controller.h
+    source/controllers/navigation-controller.h \
+    source/framework/command.h \
+    source/controllers/command-controller.h
 
 unix {
     target.path = /usr/lib

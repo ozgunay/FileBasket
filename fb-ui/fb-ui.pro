@@ -28,7 +28,9 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         source/main.cpp
 
-RESOURCES += views.qrc
+RESOURCES += views.qrc \
+    assets.qrc \
+    components.qrc
 
 LIBS += -L$$PWD/../binaries/$$DESTINATION_PATH -lfb-lib \
     -LC:/Libraries/libssh-0.8.7/build/src/Debug -lssh

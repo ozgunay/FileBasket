@@ -1,12 +1,18 @@
 import QtQuick 2.9
+import assets 1.0
+import components 1.0
 
 Item {
     Rectangle {
         anchors.fill: parent
-        color: "#f4c842"
+        color: Style.colourBackground
         Text {
             anchors.centerIn: parent
             text: "Create Connection View"
         }
+    }
+    CommandBar {
+        commandList:
+            masterController.ui_commandController.ui_createClientViewContextCommands
     }
 }

@@ -32,19 +32,25 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
-INCLUDEPATH += source
+INCLUDEPATH += source \
+    C:/Libraries/libssh-0.8.7/include
 
 SOURCES += source/models/Connection.cpp \
     source/controllers/master-controller.cpp \
     source/framework/command.cpp \
-    source/controllers/command-controller.cpp
+    source/controllers/command-controller.cpp \
+    source/SFTP/sftpconnector.cpp
 
 HEADERS += source/fb-lib_global.h  \
     source/models/Connection.h \
     source/controllers/master-controller.h \
     source/controllers/navigation-controller.h \
     source/framework/command.h \
-    source/controllers/command-controller.h
+    source/controllers/command-controller.h \
+    source/SFTP/sftpconnector.h
+
+unix|win32: LIBS += -LC:/Libraries/libssh-0.8.7/build/src/Debug/ -lssh
+DEPENDPATH += C:/Libraries/libssh-0.8.7/include
 
 unix {
     target.path = /usr/lib

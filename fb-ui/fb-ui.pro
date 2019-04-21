@@ -32,8 +32,7 @@ RESOURCES += views.qrc \
     assets.qrc \
     components.qrc
 
-LIBS += -L$$PWD/../binaries/$$DESTINATION_PATH -lfb-lib \
-    -LC:/Libraries/libssh-0.8.7/build/src/Debug -lssh
+LIBS += -L$$PWD/../binaries/$$DESTINATION_PATH -lfb-lib
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH = $$PWD
 

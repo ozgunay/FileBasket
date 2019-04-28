@@ -4,7 +4,7 @@ namespace fb {
 namespace sftp {
 
 sftpstat SFTPConnector::getTransferStatus() {
-    return  transferstatus;
+    return transferstatus;
 }
 
 void SFTPConnector::setBlockTransferDelay(int miliseconds) {
@@ -26,10 +26,6 @@ void SFTPConnector::CloseLocalFile() {
 
 void SFTPConnector::CloseRemoteFile() {
     sftp_close(file);
-}
-
-void SFTPConnector::setLogFile(FILE *logf) {
-    logfile = logf;
 }
 
 void SFTPConnector::CancelTransfer() {
@@ -166,8 +162,7 @@ ESSHERR SFTPConnector::SFTPreget(char *lfn, char *rfn, size_t blocksize) {
             return result;
         }
         if (result == E_SFTP_READ_EOF)  transferstatus = ES_DONE;
-        fprintf(logfile, "Read %d bytes from input file. Number of packets: %d , %llu from %llu bytes\n", bytesread, loopcounter, transfered, filesize);
-
+        LOG_INFO << ("Read %d bytes from input file. Number of packets: %d , %llu from %llu bytes\n", bytesread, loopcounter, transfered, filesize);
         bresult = WriteFile(localfilehandle, (LPVOID)block, bytesread, &byteswritten, nullptr);
         if (byteswritten < bytesread)
         {
@@ -361,7 +356,8 @@ ESSHERR SFTPConnector::SFTPreput(char *lfn, char *rfn, size_t blocksize)
     {
         loopcounter++;
         bresult = ReadFile(localfilehandle, (LPVOID)block, blocksize, &bytesread, nullptr);
-        fprintf(logfile, "Read %d bytes from input file. Number of packets: %d , %llu from %llu bytes\n", bytesread, loopcounter, transfered, filesize);
+        LOG_INFO << boost::format("Read %ul bytes from input file. Number of packets: %d , %llu from %llu bytes")
+                                    %bytesread %loopcounter %transfered %filesize;
         if (bytesread < blocksize)
         {
             if (bresult == FALSE)
@@ -446,8 +442,7 @@ ESSHERR SFTPConnector::closeSFTPfile()
     int rc = sftp_close(file);
     if (rc != SSH_OK)
     {
-        fprintf(logfile, "Can't close the written file: %s\n",
-            ssh_get_error(session));
+        LOG_WARNING << boost::format("Can't close the written file: %1%") %ssh_get_error(session);
         return E_FILE_CLOSE;
     }
     return E_OK;
@@ -458,8 +453,7 @@ ESSHERR SFTPConnector::writeSFTPfile(char *block, size_t blocksize)
     size_t nwritten = sftp_write(file, block, blocksize);
     if (nwritten != blocksize)
     {
-        fprintf(logfile, "Can't write data to file: %s\n",
-            ssh_get_error(session));
+        LOG_WARNING << boost::format("Can't write data to file: %s") %ssh_get_error(session);
         //sftp_close(file);
         transfered = transfered + nwritten;
         return E_WRITE_ERR;
@@ -478,7 +472,7 @@ ESSHERR SFTPConnector::readSFTPfile(char *block, uint64_t len, DWORD *bytesread)
     readbytes = sftp_read(file, block, len);
     if (readbytes < 0)
     {
-        fprintf(logfile, "Can't read  from  remote file: %s  %s\n", filename.c_str(), ssh_get_error(session));
+        LOG_WARNING << boost::format("Can't read  from  remote file: %s  %s") %filename.c_str() %ssh_get_error(session);
         *bytesread = 0;
         return E_SFTP_READ_ERR;
     }
@@ -504,8 +498,7 @@ ESSHERR SFTPConnector::createSFTPfile(char *fn)
     file = sftp_open(sftp, fn, access_type, S_IREAD | S_IWRITE);
     if (file == nullptr)
     {
-        fprintf(logfile, "Can't open file for writing: %s\n",
-            ssh_get_error(session));
+        LOG_WARNING << boost::format("Can't open file for writing: %s") %ssh_get_error(session);
         return E_FILEOPEN_WRITE;
     }
     return E_OK;
@@ -521,8 +514,7 @@ ESSHERR SFTPConnector::rdopen_existing_SFTPfile(char *fn)
         access_type, S_IREAD);
     if (file == nullptr)
     {
-        fprintf(logfile, "Can't open file for writing: %s\n",
-            ssh_get_error(session));
+        LOG_WARNING << boost::format("Can't open file for writing: %s") %ssh_get_error(session);
         return E_FILEOPEN_RDONLY;
     }
     return E_OK;
@@ -538,8 +530,7 @@ ESSHERR SFTPConnector::rwopen_existing_SFTPfile(char *fn)
         access_type, S_IREAD);
     if (file == nullptr)
     {
-        fprintf(logfile, "Can't open file for writing: %s\n",
-            ssh_get_error(session));
+        LOG_WARNING << boost::format("Can't open file for writing: %s") %ssh_get_error(session);
         return E_FILEOPEN_RDONLY;
     }
     return E_OK;
@@ -555,8 +546,7 @@ ESSHERR SFTPConnector::openSFTPfile(char *fn)
         access_type, S_IWRITE);
     if (file == nullptr)
     {
-        fprintf(logfile, "Can't open file for writing: %s\n",
-            ssh_get_error(session));
+        LOG_WARNING << boost::format("Can't open file for writing: %s") %ssh_get_error(session);
         return E_FILE_OPEN_READ;
     }
     return E_OK;
@@ -570,8 +560,7 @@ ESSHERR SFTPConnector::Makedir(char *newdir)
     {
         if (sftp_get_error(sftp) != SSH_FX_FILE_ALREADY_EXISTS)
         {
-            fprintf(logfile, "Can't create directory: %s\n",
-                ssh_get_error(session));
+            LOG_WARNING << boost::format("Can't open file for writing: %s") %ssh_get_error(session);
             return E_CREATE_DIR;
         }
     }
@@ -599,7 +588,6 @@ SFTPConnector::SFTPConnector()
 
     pause = false;
     transferstatus = ES_NONE;
-    logfile = stderr;
     blocktransferdelay = INITIALBLOCKTRANSDELAY;
 }
 
@@ -624,7 +612,6 @@ SFTPConnector::SFTPConnector(wchar_t *dir, wchar_t *hn, int hostport, wchar_t *u
 
     pause = false;
     transferstatus = ES_NONE;
-    logfile = stderr;
     blocktransferdelay = INITIALBLOCKTRANSDELAY;
 }
 
@@ -641,8 +628,7 @@ ESSHERR  SFTPConnector::InitSFTP()
     rc = sftp_init(sftp);
     if (rc != SSH_OK)
     {
-        fprintf(logfile, "Error initializing SFTP session: %s.\n",
-            sftp_get_error(sftp));
+        LOG_WARNING << boost::format("Error initializing SFTP session: %s.") %ssh_get_error(session);
         sftp_free(sftp);
         return E_INIT_SFTP;
     }
@@ -742,8 +728,7 @@ int SFTPConnector::sftp_list_dir(const std::string file_directory_server)
 
     if (!dir)
     {
-        fprintf(stderr, "Directory not opened: %s\n",
-            ssh_get_error(session));
+        LOG_WARNING << boost::format("Directory not opened: %s\n") %ssh_get_error(session);
         return SSH_ERROR;
     }
     printf("Name                       Size Perms    Owner\tGroup\n");

@@ -6,6 +6,9 @@
 include(../qmake-target-platform.pri)
 include(../qmake-destination-path.pri)
 
+#Silinecek!
+DEFINES += UNICODE
+
 DESTDIR = $$PWD/../binaries/$$DESTINATION_PATH
 OBJECTS_DIR = $$PWD/build/$$DESTINATION_PATH/.obj
 MOC_DIR = $$PWD/build/$$DESTINATION_PATH/.moc
@@ -33,28 +36,48 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 INCLUDEPATH += source \
-    C:/Libraries/libssh-0.8.7/include
+    C:/Libraries/libssh-0.8.7/include \
+    C:/Libraries/boost_1_70_0/
 
-SOURCES += source/models/Connection.cpp \
+SOURCES += source/logger/fb-logger.cpp \
     source/controllers/master-controller.cpp \
     source/framework/command.cpp \
     source/controllers/command-controller.cpp \
-    source/SFTP/sftpconnector.cpp
+    source/SFTP/sftpconnector.cpp \
+    source/models/ConnectionController.cpp \
+    source/models/Connection.cpp \
+    source/data/DataDecorator.cpp \
+    source/data/StringDecorator.cpp \
+    source/data/IPDecorator.cpp \
+    source/data/EnumeratorDecorator.cpp \
+    source/data/Entity.cpp \
+    source/data/IntDecorator.cpp
 
 HEADERS += source/fb-lib_global.h  \
-    source/models/Connection.h \
+    source/fb-lib_global.h  \
+    source/logger/fb-logger.h \
     source/controllers/master-controller.h \
     source/controllers/navigation-controller.h \
     source/framework/command.h \
     source/controllers/command-controller.h \
-    source/SFTP/sftpconnector.h
+    source/SFTP/sftpconnector.h \
+    source/models/ConnectionController.h \
+    source/models/ConnectionSMImpl.h \
+    source/models/Connection.h \
+    source/data/DataDecorator.h \
+    source/data/StringDecorator.h \
+    source/data/IPDecorator.h \
+    source/data/EnumeratorDecorator.h \
+    source/data/Entity.h \
+    source/data/EntityCollection.h \
+    source/data/IntDecorator.h
 
 unix|win32: LIBS += -LC:/Libraries/libssh-0.8.7/build/src/Debug/ -lssh
+LIBS += "-LC:/Libraries/boost_1_70_0/stage/x64/"
+DEPENDPATH += C:/Libraries/boost_1_70_0
 DEPENDPATH += C:/Libraries/libssh-0.8.7/include
 
 unix {
     target.path = /usr/lib
     INSTALLS += target
 }
-
-

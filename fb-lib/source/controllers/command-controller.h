@@ -6,6 +6,8 @@
 #include <fb-lib_global.h>
 #include <framework/command.h>
 
+#include "models/ConnectionController.h"
+
 namespace fb {
 namespace controllers {
 

@@ -9,6 +9,9 @@
 #include <libssh\libssh.h>
 #include <libssh\sftp.h>
 
+#include <boost/format.hpp>
+#include "logger/fb-logger.h"
+
 //  constant to limit length of character strings
 const unsigned int SHORT_BUFF_LEN = 1024;
 // milliseconds, this is the delay that we put after
@@ -50,7 +53,6 @@ private:
     sftp_session sftp;                    // sftp session
     sftp_file file;                       // structure for a remote file
     FILE *localfile;                      // not used in windows but could be local file pointer in UNIX
-    FILE *logfile;                        // the file for writing logs, default is set to stderr
     std::string filename;                 // file name of the transfer;
     std::string localfilename;            // file name of local file;
     std::string tempfilename;             // a temporaty file name will be used during the transfer which is renamed when transfer is completed.
@@ -109,7 +111,6 @@ public:
     ESSHERR SFTPreget(char *lfn, char *rfn, size_t blocksize);  // checks for previouse interrupted transfer, then either continues the previouse transfer ( if there was any) or starts a new one (DOWNLOAD)
     void CancelTransfer();
     void PauseTransfer();
-    void setLogFile(FILE *logf);         // sets the log file, if not set stderr will be used. by default.
     void CloseLocalFile();
     void CloseRemoteFile();
     int GetSessionStatus();

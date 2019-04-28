@@ -20,6 +20,7 @@ public:
         createClientViewContextCommands.append( createClientSaveCommand );
     }
     CommandController* commandController{nullptr};
+    fb::models::ConnectionController connectionController;
     QList<Command*> createClientViewContextCommands{};
 };
 
@@ -39,6 +40,7 @@ CommandController::ui_createClientViewContextCommands() {
 
 void CommandController::onCreateClientSaveExecuted() {
     qDebug() << "You executed the Save command!";
+    implementation->connectionController.startup();
 }
 
 } // namespace controllers

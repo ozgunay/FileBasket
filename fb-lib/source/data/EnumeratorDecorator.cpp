@@ -35,12 +35,13 @@ int EnumeratorDecorator::value() const {
     return implementation->value;
 }
 
-void EnumeratorDecorator::setValue(int value) {
+EnumeratorDecorator& EnumeratorDecorator::setValue(int value) {
     if(value != implementation->value) {
         // ...Validation here if required...
         implementation->value = value;
         emit valueChanged();
     }
+    return *this;
 }
 
 QString EnumeratorDecorator::valueDescription() const {

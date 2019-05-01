@@ -23,7 +23,7 @@ public:
      IntDecorator(Entity* parentEntity = nullptr, const QString& key =
         "SomeItemKey", const QString& label = "",  int value = 0);
     ~IntDecorator() override;
-    void setValue(int value);
+    IntDecorator& setValue(int value);
     int value() const;
     QJsonValue toJson() const override;
     void fromJson(const QJsonObject& jsonObject) override;

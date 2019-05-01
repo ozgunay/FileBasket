@@ -24,7 +24,7 @@ public:
      IpDecorator(Entity* parentEntity = nullptr, const QString& key =
         "SomeItemKey", const QString& label = "", const QString& value = "");
     ~IpDecorator() override;
-    void setValue(const QString& value);
+    IpDecorator& setValue(const QString& value);
     const QString& value() const;
     QJsonValue toJson() const override;
     void fromJson(const QJsonObject& jsonObject) override;

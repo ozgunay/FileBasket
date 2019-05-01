@@ -36,8 +36,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 INCLUDEPATH += source \
-    C:/Libraries/libssh-0.8.7/include \
-    C:/Libraries/boost_1_70_0/
+    C:/Libraries/libssh-0.8.7/include
+LIBS += -LC:/Libraries/libssh-0.8.7/build/src/Debug/ -lssh
+DEPENDPATH += C:/Libraries/libssh-0.8.7/include
+
+INCLUDEPATH += C:/Libraries/boost_1_70_0
+LIBS += -LC:/Libraries/boost_1_70_0/stage/msvc/x64/
+DEPENDPATH += C:/Libraries/boost_1_70_0
+DEFINES += BOOST_LOG_DYN_LINK
 
 SOURCES += source/logger/fb-logger.cpp \
     source/controllers/master-controller.cpp \
@@ -71,11 +77,6 @@ HEADERS += source/fb-lib_global.h  \
     source/data/Entity.h \
     source/data/EntityCollection.h \
     source/data/IntDecorator.h
-
-unix|win32: LIBS += -LC:/Libraries/libssh-0.8.7/build/src/Debug/ -lssh
-LIBS += "-LC:/Libraries/boost_1_70_0/stage/x64/"
-DEPENDPATH += C:/Libraries/boost_1_70_0
-DEPENDPATH += C:/Libraries/libssh-0.8.7/include
 
 unix {
     target.path = /usr/lib

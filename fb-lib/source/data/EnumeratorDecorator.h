@@ -28,7 +28,7 @@ public:
         const std::map<int, QString>& descriptionMapper = std::map<int,
         QString>());
     ~EnumeratorDecorator() override;
-    void setValue(int value);
+    EnumeratorDecorator& setValue(int value);
     int value() const;
     QString valueDescription() const;
     QJsonValue toJson() const override;

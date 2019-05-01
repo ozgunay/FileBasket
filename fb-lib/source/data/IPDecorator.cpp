@@ -31,17 +31,19 @@ const QString& IpDecorator::value() const {
     return implementation->value;
 }
 
-void IpDecorator::setValue(const QString& value) {
+IpDecorator& IpDecorator::setValue(const QString& value) {
     if(value != implementation->value) {
         // ...Validation here if required...
         boost::system::error_code ec;
         boost::asio::ip::address::from_string( value.toStdString(), ec );
+        boost::asio::io_service io;
         if ( ec ) {
             LOG_WARNING << ec.message( );
         }
         implementation->value = value;
         emit valueChanged();
     }
+    return *this;
 }
 
 QJsonValue IpDecorator::toJson() const {

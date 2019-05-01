@@ -31,12 +31,13 @@ const QString& StringDecorator::value() const {
     return implementation->value;
 }
 
-void StringDecorator::setValue(const QString& value) {
+StringDecorator& StringDecorator::setValue(const QString& value) {
     if(value != implementation->value) {
         // ...Validation here if required...
         implementation->value = value;
         emit valueChanged();
     }
+    return *this;
 }
 
 QJsonValue StringDecorator::toJson() const {

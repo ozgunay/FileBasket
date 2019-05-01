@@ -22,7 +22,7 @@ public:
      StringDecorator(Entity* parentEntity = nullptr, const QString& key =
         "SomeItemKey", const QString& label = "", const QString& value = "");
     ~StringDecorator() override;
-    void setValue(const QString& value);
+    StringDecorator& setValue(const QString& value);
     const QString& value() const;
     QJsonValue toJson() const override;
     void fromJson(const QJsonObject& jsonObject) override;

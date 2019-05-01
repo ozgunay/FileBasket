@@ -31,12 +31,13 @@ int IntDecorator::value() const {
     return implementation->value;
 }
 
-void IntDecorator::setValue(int value) {
+IntDecorator& IntDecorator::setValue(int value) {
     if(value != implementation->value) {
         // ...Validation here if required...
         implementation->value = value;
         emit valueChanged();
     }
+    return *this;
 }
 
 QJsonValue IntDecorator::toJson() const {

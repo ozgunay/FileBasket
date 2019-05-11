@@ -33,6 +33,13 @@ RESOURCES += views.qrc \
     components.qrc
 
 LIBS += -L$$PWD/../binaries/$$DESTINATION_PATH -lfb-lib
+INCLUDEPATH += C:/Libraries/libssh-0.8.7/include
+LIBS += -LC:/Libraries/libssh-0.8.7/build/src/Debug/ -lssh
+DEPENDPATH += C:/Libraries/libssh-0.8.7/include
+INCLUDEPATH += C:/Libraries/boost_1_70_0
+LIBS += -LC:/Libraries/boost_1_70_0/stage/msvc/x64/
+DEPENDPATH += C:/Libraries/boost_1_70_0
+DEFINES += BOOST_LOG_DYN_LINK
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH = $$PWD
 

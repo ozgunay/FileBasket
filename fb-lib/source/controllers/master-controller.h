@@ -8,6 +8,7 @@
 #include <fb-lib_global.h>
 #include <controllers/navigation-controller.h>
 #include <controllers/command-controller.h>
+#include <models/Connection.h>
 
 namespace fb {
 namespace controllers {
@@ -20,11 +21,13 @@ class FBLIBSHARED_EXPORT MasterController : public QObject
         ui_navigationController READ navigationController CONSTANT )
     Q_PROPERTY( fb::controllers::CommandController* ui_commandController READ
         commandController CONSTANT )
+    Q_PROPERTY( fb::models::Connection* ui_newConnection READ newConnection CONSTANT )
 public:
     explicit MasterController(QObject *parent = nullptr);
     ~MasterController();
     NavigationController* navigationController();
     CommandController* commandController();
+    fb::models::Connection* newConnection();
     const QString& welcomeMessage() const;
 
 private:

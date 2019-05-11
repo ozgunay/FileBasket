@@ -6,8 +6,8 @@ import components 1.0
 
 Window {
     visible: true
-    width: 640
-    height: 480
+    width: Style.widthWindow
+    height: Style.heightWindow
     title: qsTr("Connection Mangement")
 
     Connections {

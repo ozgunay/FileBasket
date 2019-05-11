@@ -1,5 +1,7 @@
 #include "master-controller.h"
 
+using namespace fb::models;
+
 namespace fb {
 namespace controllers {
 
@@ -10,10 +12,12 @@ public:
         : masterController(_masterController) {
         navigationController = new NavigationController(masterController);
         commandController = new CommandController(masterController);
+        newConnection = new Connection(masterController);
     }
     MasterController* masterController{nullptr};
     NavigationController* navigationController{nullptr};
     CommandController* commandController{nullptr};
+    Connection* newConnection{nullptr};
     QString welcomeMessage = "File Basket is a ssh file transfer software.";
 };
 
@@ -36,6 +40,10 @@ CommandController* MasterController::commandController() {
 
 const QString& MasterController::welcomeMessage() const {
     return implementation->welcomeMessage;
+}
+
+Connection* MasterController::newConnection() {
+    return implementation->newConnection;
 }
 
 

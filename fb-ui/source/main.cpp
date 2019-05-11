@@ -3,6 +3,13 @@
 #include <QQmlContext>
 
 #include <controllers/master-controller.h>
+// DATA
+#include <data/IntDecorator.h>
+#include <data/StringDecorator.h>
+#include <data/EnumeratorDecorator.h>
+#include <data/IPDecorator.h>
+// MODELS
+#include <models/Connection.h>
 
 int main(int argc, char *argv[])
 {
@@ -17,6 +24,13 @@ int main(int argc, char *argv[])
     qmlRegisterType<fb::controllers::CommandController>("FB", 1, 0,
         "CommandController");
     qmlRegisterType<fb::framework::Command>("FB", 1, 0, "Command");
+
+    qmlRegisterType<fb::data::IntDecorator>("FB", 1, 0, "IntDecorator");
+    qmlRegisterType<fb::data::IpDecorator>("FB", 1, 0, "IpDecorator");
+    qmlRegisterType<fb::data::StringDecorator>("FB", 1, 0, "StringDecorator");
+    qmlRegisterType<fb::data::EnumeratorDecorator>("FB", 1, 0,
+        "EnumeratorDecorator");
+    qmlRegisterType<fb::models::Connection>("FB", 1, 0, "Connection");
 
     fb::controllers::MasterController masterController;
 

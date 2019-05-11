@@ -1,32 +1,43 @@
 #include "Connection.h"
 
+using namespace fb::data;
+
 namespace fb {
 namespace models {
-
-Connection::Connection(const QString& hostname,
-                       const QString& username,
-                       const QString& password,
-                       const QString& basedir,
-                       const int port) {
-    m_session = ssh_new();
-    if (m_session == nullptr) {
-        LOG_ERROR << "Could not allocate a session.";
-    }
-    m_hostname->setValue(hostname);
-    m_username->setValue(username);
-    m_password->setValue(password);
-    m_basedir->setValue(basedir);
-    m_port->setValue(port);
+Connection::Connection(QObject* parent)
+    : Entity(parent, "client") {
+    m_hostname = static_cast<IpDecorator*>(addDataItem(new
+        IpDecorator(this, "ip", "Connection IP")));
+    m_username = static_cast<StringDecorator*>(addDataItem(new
+        StringDecorator(this, "username", "Username")));
+    m_password = static_cast<StringDecorator*>(addDataItem(new
+        StringDecorator(this, "password", "Password")));
+    m_basedir = static_cast<StringDecorator*>(addDataItem(new
+        StringDecorator(this, "basedir", "Base Directory")));
+    m_port = static_cast<IntDecorator*>(addDataItem(new
+      IntDecorator(this, "port", "Port", 22)));
+}
+Connection::Connection(QObject* parent, const QJsonObject& json)
+    : Connection(parent) {
+    fromJson(json);
     m_verbosity = SSH_LOG_RARE;
 }
 
 Connection::~Connection() {
-    sftp_free(m_sftp);
-    ssh_disconnect(m_session);
-    ssh_free(m_session);
+    if(m_sftp != nullptr)
+        sftp_free(m_sftp);
+    if(ssh_is_connected(m_session))
+        ssh_disconnect(m_session);
+    if(m_session != nullptr)
+        ssh_free(m_session);
 }
 
-ESSHERR  Connection::InitSession() {
+ESSHERR Connection::InitSession() {
+    m_session = ssh_new();
+    if (m_session == nullptr) {
+        LOG_ERROR << "Could not allocate a session.";
+    }
+
     ssh_options_set(m_session, SSH_OPTIONS_HOST, m_hostname->value().toLatin1().data());
     ssh_options_set(m_session, SSH_OPTIONS_LOG_VERBOSITY, &m_verbosity);
     ssh_options_set(m_session, SSH_OPTIONS_PORT, &m_port);

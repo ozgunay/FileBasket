@@ -57,7 +57,8 @@ SOURCES += source/logger/fb-logger.cpp \
     source/data/IPDecorator.cpp \
     source/data/EnumeratorDecorator.cpp \
     source/data/Entity.cpp \
-    source/data/IntDecorator.cpp
+    source/data/IntDecorator.cpp \
+    source/data/deneme.cpp
 
 HEADERS += source/fb-lib_global.h  \
     source/fb-lib_global.h  \
@@ -76,7 +77,8 @@ HEADERS += source/fb-lib_global.h  \
     source/data/EnumeratorDecorator.h \
     source/data/Entity.h \
     source/data/EntityCollection.h \
-    source/data/IntDecorator.h
+    source/data/IntDecorator.h \
+    source/data/deneme.h
 
 unix {
     target.path = /usr/lib

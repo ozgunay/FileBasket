@@ -17,7 +17,7 @@
 
 #include <data/StringDecorator.h>
 #include <data/IntDecorator.h>
-#include <data/IpDecorator.h>
+#include <data/IPDecorator.h>
 #include <data/Entity.h>
 
 namespace fb {
@@ -45,11 +45,8 @@ class FBLIBSHARED_EXPORT Connection : public data::Entity
                CONSTANT)
 
 public:
-    Connection(const QString& hostname,
-                         const QString& username,
-                         const QString& password,
-                         const QString& basedir,
-                         const int port);
+    explicit Connection( QObject* parent = nullptr );
+    Connection( QObject* parent, const QJsonObject& json);
     ~Connection();
     ESSHERR ConnectSession();
     ESSHERR InitSession();
@@ -59,9 +56,9 @@ public:
     int getVerbosity();
 
 private:
-    ssh_session  m_session;                                             // ssh session
-    sftp_session m_sftp;                                                // sftp session
-    sftp_file m_file;                                                   // structure for a remote file
+    ssh_session  m_session{nullptr};                                             // ssh session
+    sftp_session m_sftp{nullptr};                                                // sftp session
+    sftp_file m_file{nullptr};                                                   // structure for a remote file
     QTime m_transferstarttime;                                          // time of start of the transfer
     data::StringDecorator* m_username{nullptr};
     data::StringDecorator* m_password{nullptr};

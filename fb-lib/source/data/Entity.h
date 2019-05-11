@@ -11,7 +11,6 @@
 namespace fb {
 namespace data {
 
-
 class FBLIBSHARED_EXPORT Entity : public QObject
 {
     Q_OBJECT

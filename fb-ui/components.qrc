@@ -5,5 +5,9 @@
         <file alias="NavigationBar.qml">components/NavigationBar.qml</file>
         <file alias="CommandButton.qml">components/CommandButton.qml</file>
         <file alias="CommandBar.qml">components/CommandBar.qml</file>
+        <file alias="StringEditorSingleLine.qml">components/StringEditorSingleLine.qml</file>
+        <file alias="Panel.qml">components/Panel.qml</file>
+        <file alias="IPEditor.qml">components/IPEditor.qml</file>
+        <file alias="IntegerEditor.qml">components/IntegerEditor.qml</file>
     </qresource>
 </RCC>

@@ -49,7 +49,6 @@ SOURCES += source/logger/fb-logger.cpp \
     source/controllers/master-controller.cpp \
     source/framework/command.cpp \
     source/controllers/command-controller.cpp \
-    source/SFTP/sftpconnector.cpp \
     source/models/ConnectionController.cpp \
     source/models/Connection.cpp \
     source/data/DataDecorator.cpp \
@@ -67,7 +66,6 @@ HEADERS += source/fb-lib_global.h  \
     source/controllers/navigation-controller.h \
     source/framework/command.h \
     source/controllers/command-controller.h \
-    source/SFTP/sftpconnector.h \
     source/models/ConnectionController.h \
     source/models/ConnectionSMImpl.h \
     source/models/Connection.h \

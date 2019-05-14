@@ -6,7 +6,7 @@
 #include <fb-lib_global.h>
 #include <framework/command.h>
 
-#include "models/ConnectionController.h"
+#include <models/Connection.h>
 
 namespace fb {
 namespace controllers {
@@ -14,14 +14,11 @@ namespace controllers {
 class FBLIBSHARED_EXPORT CommandController : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QQmlListProperty<fb::framework::Command>
-        ui_createClientViewContextCommands READ
-        ui_createClientViewContextCommands CONSTANT)
+    Q_PROPERTY(QQmlListProperty<fb::framework::Command> ui_createConnectionViewContextCommands READ ui_createConnectionViewContextCommands CONSTANT)
 public:
-    explicit CommandController(QObject* _parent = nullptr);
+    explicit CommandController(QObject* _parent = nullptr, models::Connection* newConnection = nullptr);
     ~CommandController();
-    QQmlListProperty<framework::Command>
-    ui_createClientViewContextCommands();
+    QQmlListProperty<framework::Command> ui_createConnectionViewContextCommands();
 public slots:
     void onCreateClientSaveExecuted();
 private:

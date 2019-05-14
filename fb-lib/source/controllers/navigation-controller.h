@@ -4,7 +4,6 @@
 #include <QObject>
 
 #include <fb-lib_global.h>
-#include <models/ConnectionController.h>
 
 namespace fb {
 namespace controllers {
@@ -19,7 +18,7 @@ public:
 signals:
     void goCreateConnectionView();
     void goDashboardView();
-    void goEditConnectionView(fb::models::ConnectionController* connection);
+    void goEditConnectionView();
     void goFindConnectionView();
 };
 

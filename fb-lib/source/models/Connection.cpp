@@ -1,11 +1,21 @@
 #include "Connection.h"
+#include <boost/msm/back/state_machine.hpp>
+#include "ConnectionSMImpl.h"
 
 using namespace fb::data;
 
 namespace fb {
 namespace models {
+
+// provide complete type definition
+struct Connection::Fsm : public boost::msm::back::state_machine<FsmImpl> {
+    explicit Fsm(Connection* ctrl)
+        : boost::msm::back::state_machine<FsmImpl>(ctrl) {}
+};
+
 Connection::Connection(QObject* parent)
-    : Entity(parent, "client") {
+    : Entity(parent, "client"),
+    m_fsm(std::make_shared<Fsm>(this)){
     m_hostname = static_cast<IpDecorator*>(addDataItem(new
         IpDecorator(this, "ip", "Connection IP")));
     m_username = static_cast<StringDecorator*>(addDataItem(new
@@ -17,6 +27,7 @@ Connection::Connection(QObject* parent)
     m_port = static_cast<IntDecorator*>(addDataItem(new
       IntDecorator(this, "port", "Port", 22)));
 }
+
 Connection::Connection(QObject* parent, const QJsonObject& json)
     : Connection(parent) {
     fromJson(json);
@@ -235,6 +246,9 @@ ESSHERR Connection::openSFTPfile(char *fn) {
     return E_OK;
 }
 
+void Connection::connectionSettingsSaved() {
+    m_fsm->process_event(ev_connect{});
+}
 
 } //namespace models
 } //namespace fb

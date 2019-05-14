@@ -55,6 +55,8 @@ public:
     void setVerbosity(const int verbosity);
     int getVerbosity();
 
+    void connectionSettingsSaved();
+
 private:
     ssh_session  m_session{nullptr};                                             // ssh session
     sftp_session m_sftp{nullptr};                                                // sftp session
@@ -78,6 +80,11 @@ private:
     ESSHERR closeSFTPfile();                                            // closes the remote file;
     ESSHERR openSFTPfile(char *fn);                                     // opens the remote file
     ESSHERR getSFTPfileinfo();                                          // gets information about the remote file
+
+    // Forward declaration of fsm
+    // See http://stackoverflow.com/questions/10899641/boost-msm-class/10922799#10922799
+    struct Fsm;
+    std::shared_ptr<Fsm> m_fsm;
 
 };
 

@@ -1,39 +1,30 @@
-#include <boost/msm/back/state_machine.hpp>
-#include <iostream>
-#include "ConnectionController.h"
-#include "ConnectionSMImpl.h"
+
 
 namespace fb {
 namespace models {
 
-// provide complete type definition
-struct ConnectionController::Fsm : public boost::msm::back::state_machine<FsmImpl> {
-    explicit Fsm(ConnectionController* ctrl)
-        : boost::msm::back::state_machine<FsmImpl>(ctrl) {}
-};
+
 
 ConnectionController::ConnectionController()
-    : m_fsm(std::make_shared<Fsm>(this)) {
+     {
 }
 
-void ConnectionController::startup() {
-    m_fsm->process_event(ev_connect{});
+void ConnectionController::clientSettingsSaved(const QJsonObject& connectionSettingsIn) const {
+
 }
 
-void ConnectionController::shutdown() {
-    m_fsm->process_event(ev_disconnect{});
+void ConnectionController::connectToClient() {
+    std::cout << "connectToClient\n";
+    m_connection = std::make_unique<Connection>();
+    m_connection->ConnectSession();
 }
 
-void ConnectionController::do_connect() const {
-    std::cout << "do_connect\n";
+void ConnectionController::connectedToClient() const {
+    std::cout << "connectedToClient\n";
 }
 
-void ConnectionController::do_start() const {
-    std::cout << "do_start\n";
-}
-
-void ConnectionController::do_stop() const {
-    std::cout << "do_stop\n";
+void ConnectionController::disconnectedFromClient() const {
+    std::cout << "clientNotConnected\n";
 }
 
 } //namespace models

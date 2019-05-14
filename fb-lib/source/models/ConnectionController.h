@@ -11,11 +11,12 @@ class FBLIBSHARED_EXPORT ConnectionController
 {
 public:
     ConnectionController();
-    void startup();
-    void shutdown();
-    void do_connect() const;
-    void do_start() const;
-    void do_stop() const;
+
+    void clientSettingsSaved(const QJsonObject& connectionSettingsIn) const;
+
+    void connectToClient();
+    void connectedToClient() const;
+    void disconnectedFromClient() const;
 
 private:
     // Forward declaration of fsm

@@ -11,8 +11,8 @@ public:
     Implementation(MasterController* _masterController)
         : masterController(_masterController) {
         navigationController = new NavigationController(masterController);
-        commandController = new CommandController(masterController);
         newConnection = new Connection(masterController);
+        commandController = new CommandController(masterController, newConnection);
     }
     MasterController* masterController{nullptr};
     NavigationController* navigationController{nullptr};
